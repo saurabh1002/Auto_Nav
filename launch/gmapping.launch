@@ -1,0 +1,13 @@
+<!-- SLAM Gmapping package configuration parameters -->
+
+<launch>
+	<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+		<param name="scan" value="scan"/>
+		<param name="xmin" value="-15.0"/>
+		<param name="ymin" value="-15.0"/>
+		<param name="ymax" value="15.0"/>
+		<param name="xmax" value="15.0"/>
+		<param name="linearUpdate" value="0.5"/>
+		<param name="occ_thresh" value="0.4"/>
+	</node>
+</launch>

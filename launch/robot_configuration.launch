@@ -1,0 +1,12 @@
+<launch>
+	<arg name="port" value="/dev/ttyUSB1" />	<!-- COM Port for Serial connection through CP2102 -->
+	<include file="$(find sweep_ros)/launch/sweep2scan.launch">	<!-- Scanse Sweep LIDAR launch file - Default COM Port: /dev/ttyUSB0 -->
+		<arg name="speed" value="2" />							<!-- LIDAR Rotation speed in Hz -->
+	</include>
+	<node name="tf_publisher" pkg="Auto_Nav" type="odometry.py" output="screen"/>	<!-- Node to compute odometry information and publish the robot Transforms -->
+	<node name="motor_pwm_publisher" pkg="Auto_Nav" type="motor_pwm_publisher.py" output="screen"/>	<!-- Subscribes the cmd_vel topic published by move_base node and maps it to motor pwm values -->
+	<node name="rosserial_atmega_128" pkg="rosserial_python" type="serial_node.py" output="screen">	<!-- Establishes serial connection between the microcontroller and the ROS Master -->
+		<param name="~port" type="string" value="$(arg port)" />
+	</node>
+</launch>
+	

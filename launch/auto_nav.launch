@@ -1,0 +1,47 @@
+<launch>
+	<node pkg="map_server" name="map_server" type="map_server" args="$(find avitra_2dnav_new)/maps/WRO_Room_map.yaml"/> <!--Enter the path to the yaml file of your Static Map. The Map Server will publish this Map to be used by other nodes for localisation and navigation. -->
+	
+	<!-- This node initializes the Adaptive Monte Carlo Localisation package with certain parameters that you can find in the online documentation for the package. -->
+	<node pkg="amcl" name="amcl" type="amcl" output="screen">
+		<remap from="base_scan" to="scan"/>
+		<param name="odom_model_type" value="diff"/>
+		<param name="gui_publish_rate" value="10.0"/>
+		<param name="laser_max_beams" value="60"/>
+		<param name="min_particles" value="500"/>
+		<param name="max_particles" value="2000"/>
+		<param name="kld_err" value="0.05"/>
+		<param name="kld_z" value="0.99"/>
+		<param name="odom_alpha1" value="0.8"/>
+		<param name="odom_alpha2" value="0.2"/>
+		<param name="odom_alpha3" value="0.5"/>
+		<param name="odom_alpha4" value="0.2"/>
+		<param name="laser_z_hit" value="0.5"/>
+		<param name="laser_z_short" value="0.05"/>
+		<param name="laser_z_max" value="0.05"/>
+		<param name="laser_z_rand" value="0.5"/>
+		<param name="laser_sigma_hit" value="0.2"/>
+		<param name="laser_lambda_short" value="0.1"/>
+		<param name="laser_lambda_short" value="0.1"/>
+		<param name="laser_model_type" value="likelihood_field"/>
+		<param name="laser_likelihood_max_dist" value="2.0"/>
+		<param name="update_min_d" value="0.2"/>
+		<param name="update_min_a" value="0.2"/>
+		<param name="odom_frame_id" value="odom"/>
+		<param name="base_frame_id" value="base_link"/>
+		<param name="resample_interval" value="1"/>
+		<param name="transform_tolerance" value="1.0"/>
+		<param name="recovery_alpha_slow" value="0.0"/>
+		<param name="recovery_alpha_fast" value="0.0"/>
+	</node>
+	<!--This is the node for Path Planning and Autonomous Navigation. It initializes the move_base package with various parameters set using the files provided in the config_params folder. -->
+	<node pkg="move_base" name="move_base" type="move_base" respawn="false" output="screen">
+		<rosparam file="$(find Auto_Nav)/config_params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+		<rosparam file="$(find Auto_Nav)/config_params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+		<rosparam file="$(find Auto_Nav)/config_params/local_costmap_params.yaml" command="load" />
+		<rosparam file="$(find Auto_Nav)/config_params/global_costmap_params.yaml" command="load" />
+		<rosparam file="$(find Auto_Nav)/config_params/dwa_local_planner_params.yaml" command="load" />
+	    <rosparam file="$(find Auto_Nav)/config_params/move_base_params.yaml" command="load" />
+	    <rosparam file="$(find Auto_Nav)/config_params/global_planner_params.yaml" command="load" />
+	    <rosparam file="$(find Auto_Nav)/config_params/navfn_global_planner_params.yaml" command="load" />
+	</node>
+</launch>
