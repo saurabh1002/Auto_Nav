@@ -1,5 +1,5 @@
 <launch>
-	<node pkg="map_server" name="map_server" type="map_server" args="$(find avitra_2dnav_new)/maps/WRO_Room_map.yaml"/> <!--Enter the path to the yaml file of your Static Map. The Map Server will publish this Map to be used by other nodes for localisation and navigation. -->
+	<node pkg="map_server" name="map_server" type="map_server" args="$(find Auto_Nav)/maps/WRO_Room_map.yaml"/> <!--Enter the path to the yaml file of your Static Map. The Map Server will publish this Map to be used by other nodes for localisation and navigation. -->
 	
 	<!-- This node initializes the Adaptive Monte Carlo Localisation package with certain parameters that you can find in the online documentation for the package. -->
 	<node pkg="amcl" name="amcl" type="amcl" output="screen">
