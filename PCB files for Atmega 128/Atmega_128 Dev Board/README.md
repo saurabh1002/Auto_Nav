@@ -1,0 +1,1 @@
+This is the main PCB for the Atmega 128 based development board. The Atmega 128 breakout board must be inserted into this PCB and a 12x2 FRC cable must be connected to the Actuator control board for transmitting IO signals to the motor drivers.
